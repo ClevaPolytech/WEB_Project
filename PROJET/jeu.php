@@ -4,7 +4,7 @@
 			echo "<tr>";
 
 			for($m=1; $m<=10; $m++){
-                echo "<td id=".$tab[$n].$m.">";
+                echo "<td class=cell id=".$tab[$n].$m.">";
                 echo $tab[$n].$m;
                 
 				echo "</td>";
@@ -33,10 +33,10 @@
     <?php table(); ?>
     </table>
 
-    <table>
+    <table class="board2">
                 <caption>Bateaux de l'adversaire</caption>
     <?php table(); ?>
-    </table class="board2">
+    </table>
 </div>
 
     

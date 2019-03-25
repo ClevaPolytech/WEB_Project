@@ -27,8 +27,8 @@ window.onload=function(){
 
 
     //appeler au début pour que le joueur place ses bateaux
-    function PlacerBateau(){
-        PlayerBoat.push(this.id);
+    function PlacerBateau(obj){
+        PlayerBoat.push(obj.id);
         alert(PlayerBoat);
     }
 
@@ -38,18 +38,16 @@ window.onload=function(){
     }
 
     //crée un evenement de clic pour chaque case
-    for (n = 0; n < 10; n++) {
-        for (m = 1; m <= 10; m++) {
-            id=ID(m,n).toString();
-            caseclick=document.getElementById(id);
-            caseclick.onclick=function(){
+    let board1=document.getElementsByClassName("cell");
+    for (n = 0; n < 100; n++) {
+            board1[n].onclick=function(){
                 if(GameStarted){
 
                 }
-                else{PlacerBateau();}
+                else{PlacerBateau(this);}
             }
             
-        }
+        
     }
 
 }
