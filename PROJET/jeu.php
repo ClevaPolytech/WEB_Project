@@ -1,10 +1,10 @@
-<?php function table() {
+<?php function table($num) {
         $tab=["A","B","C","D","E","F","G","H","I","J"];
 		for($n=0; $n<10; $n++){
 			echo "<tr>";
 
-			for($m=1; $m<=10; $m++){
-                echo "<td class=cell id=".$tab[$n].$m.">";
+			for($m=0; $m<10; $m++){
+                echo "<td class=cell id=".$tab[$n].$m.$num.">";
                 echo $tab[$n].$m;
                 
 				echo "</td>";
@@ -30,14 +30,15 @@
 <div>
     <table class="board1">
         <caption>Vos bateaux</caption>
-    <?php table(); ?>
+    <?php table("P"); ?>
     </table>
 
     <table class="board2">
                 <caption>Bateaux de l'adversaire</caption>
-    <?php table(); ?>
+    <?php table(""); ?>
     </table>
 </div>
+<img id="restart" src="images/refresh.jpg" alt="reinitialiser" />
 
     
     
