@@ -1,18 +1,20 @@
 window.onload=function(){
-    let dimBoat=[6,4,3,2];
+    let dimBoat=[6,4,3,2]; //taille des bateaux
     let indexBoat=0;
-    let tab = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    let tab = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]; //tableau de la colonne
     let GameStarted=false;
-    let PlayerBoat=[];
-    let ordiBoat=[];
-    let ordiCoup=[];
-    let touche=[false,"X"];
+    let PlayerBoat=[]; //stock la position des bateaux du joueur
+    let ordiBoat=[]; //stock la position des bateaux de l'ordinateur
+    let ordiCoup=[]; //l'ensemble des coups joués par l 'ordinateur
+    let ordiBonCoup=[]; //ensemble des coups "touché" par l'ordinateur
+    let playerBonCoup=[]; //ensemble des coups "touhés" par le joueur
+    let coupsPossible=[];//ensemble des coups réalisable par l'ordi
+    let touche=[false,"XX"];
     let countCellBoat=0;
 
-    let PlayerselectCase; //case selectionné par le joueur
-     alert("choisissez le placement de vos bateaux - Placez un bateau de 6 cases");
+    alert("choisissez le placement de vos bateaux - Placez un bateau de 6 cases");
 
-     function GoodCase(id){ //modifie l'état d'une bonne case 
+    function GoodCase(id){ //modifie l'état d'une bonne case 
          let carre=document.getElementById(id);
          carre.style.backgroundColor="green";
      }
@@ -37,7 +39,7 @@ window.onload=function(){
         return (tab[m]+n).toString(); //retourne l'ID sous forme de String
     }
 
-    function elemCommun(obj){
+    function elemCommun(obj){ //vérifie si l'élément obj (case) a un attribut commun avec les autres cases
         let Commun0=obj.id[0];
         let Commun1 = obj.id[1];
         for(let i=0; i<PlayerBoat[indexBoat].length;i++){
@@ -50,13 +52,9 @@ window.onload=function(){
 
     }
 
-    function caseAdj(obj,joueur){
-        let tableau;
-        if (joueur == "player") { tableau = PlayerBoat[indexBoat];}
-        else{tableau=lastTour[1];}
-
-        for (let i=0; i<tableau.length; i++){
-            let cell =tableau[i];
+    function caseAdj(obj,joueur){ //verifie si une case est adjacente a une autre
+        for (let i = 0; i < PlayerBoat[indexBoat].length; i++){
+            let cell = PlayerBoat[indexBoat][i];
             if (cell[0] == obj.id[0] && Number(cell[1])+1 == obj.id[1]&&elemCommun(obj)){
                 return true;
             }
@@ -74,47 +72,54 @@ window.onload=function(){
 
     }
 
-    function getRandomInt(max) {
+    function checkWin(){ //vérifie les conditions de victoire
+        if(ordiBonCoup.length==15){}
+        else if(playerBonCoup.length==15){}
+    }
+
+    function getRandomInt(max) { //renvoie une valeur aléatoire
         return Math.floor(Math.random() * Math.floor(max));
     }
 
-    function PlacerOrdi(){
-        /*for(let i=0; i<dimBoat.length;i++){
-            while(val0-dimBoat[i]<0){
-                let val0 = tab[getRandomInt(10)];
-                }
-                
-                let chiffre = 0;
-                ordiBoat.push([val0 + chiffre]);
-                alert(ordiBoat);
-                for (let j = 0; j < dimBoat[i]; j++) {
-
-            }
-            
-        }*/
+    function PlacerOrdi(){ //place les bateaux de l'ordinateur
+        
         ordiBoat = ["A3", "B3", "C3", "D3", "E3", "F3", "C6", "C7", "C8", "C9", "G6", "H6", "I6", "I2", "I3"];
     }
 
-    function ordiIA(){
-        let verif=false;
-        let coup=aleatoire();
-        /*if(lastTour[0]==false){
-            while (verif == false){
-                coup = aleatoire();
-                verif=caseAdj(coup,"ordi");
-            }
-            checkHit(coup,"ordi");
-        }
-        else{*/
-            let ordiCell=document.getElementById(coup+"P");
-            checkHit(ordiCell,"ordi");
-        //}
+    function coupPossible(id){
+        coupsPossible=[];
+        if (ordiCoup.includes(tab[Number(tab.indexOf(id[0])) + 1] + id[1] + "P") == false && typeof(tab[Number(tab.indexOf(id[0])) + 1])!=="undefined"){
+            coupsPossible.push(tab[Number(tab.indexOf(id[0])) + 1] + id[1]+"P");}
+        if (ordiCoup.includes(tab[Number(tab.indexOf(id[0])) - 1] + id[1] + "P") == false && typeof(tab[Number(tab.indexOf(id[0])) - 1]) !== "undefined"){
+            coupsPossible.push(tab[Number(tab.indexOf(id[0])) - 1] + id[1]+"P");}
+        if (ordiCoup.includes(id[0] + (Number(id[1]) - 1) + "P") == false && (Number(id[1]) - 1)>0){
+            coupsPossible.push(id[0] + (Number(id[1]) - 1)+"P");}
+        if (ordiCoup.includes(id[0] + (Number(id[1]) + 1) + "P") == false && (Number(id[1]) + 1)<10){
+            coupsPossible.push(id[0]+(Number(id[1])+1)+"P");}
+        if (coupsPossible.length > 0) {
+            return true;}
+    
+        else{touche[0]=false;
+            return false;}
     }
 
-    function aleatoire(){
+    function ordiIA(){ //structure du jeu de l'ordinateur
+        let ordiCell;
+        let coup=aleatoire();
+        if (touche[0] == true && coupPossible(touche[1])){
+            ordiCell=document.getElementById(coupsPossible[0]);
+            checkHit(ordiCell,"ordi");
+        }
+        else{
+            ordiCell=document.getElementById(coup+"P");
+            checkHit(ordiCell,"ordi");
+        }
+    }
+
+    function aleatoire(){ //renvoie l'ID d'une case aléatoire 
         let val0 = tab[getRandomInt(10)];
         let val1 = getRandomInt(10);
-        while(ordiCoup.indexOf(val0+val1)!==-1){
+        while(ordiCoup.includes(val0+val1+"P")==true){
             val0 = tab[getRandomInt(10)];
             val1 = getRandomInt(10);}
         return val0+val1;
@@ -133,20 +138,19 @@ window.onload=function(){
             PlayerBoat[indexBoat]=[obj.id];
             BoatCase(obj.id);
         }
-        if (countCellBoat == dimBoat[indexBoat]) {
+        if (countCellBoat == dimBoat[indexBoat]) { //crée un tableau pour chaque bateau
             indexBoat++;
             countCellBoat = 0;
             if(dimBoat[indexBoat]==null){
                 GameStarted=true;
                 main();
-                alert(PlayerBoat);
             }
             else{
             alert("placez bateau de " + dimBoat[indexBoat] + " cases");}
         }
     }
 
-    function replacer(){
+    function replacer(){ //reinitialise le placement des bateaux
         indexBoat = 0;
         GameStarted = false;
         PlayerBoat = [];
@@ -157,27 +161,29 @@ window.onload=function(){
 
     //vérifie si touché ou non
     function checkHit(obj,joueur){
-        if(ordiBoat.indexOf(obj.id)<0&&joueur=="player"){
+        if (joueur == "player"&&ordiBoat.includes(obj.id)==false){ //si le joueur ne touche pas
             BadCase(obj.id);
-            
+    
         }
-        
-        else if (PlayerBoat[3].indexOf(obj.id) < 0 &&PlayerBoat[2].indexOf(obj.id) < 0 &&PlayerBoat[1].indexOf(obj.id) < 0 &&PlayerBoat[0].indexOf(obj.id) < 0 && joueur == "ordi") {
-            alert(obj.id);
+        //si l'ordinateur ne touche pas
+        else if (PlayerBoat[3].indexOf(obj.id)==-1 &&PlayerBoat[2].indexOf(obj.id)==-1 &&PlayerBoat[1].indexOf(obj.id)==-1 &&PlayerBoat[0].indexOf(obj.id)==-1 && joueur == "ordi") {
             BadCase(obj.id);
-            touche[0] = false;
             ordiCoup.push(obj.id);
         }
         else{
             GoodCase(obj.id);
-            if(joueur=="player"){ordiBoat.splice(ordiBoat.indexOf(obj.id),1);}
-            else { PlayerBoat.splice(PlayerBoat.indexOf(obj.id), 1);
+            if(joueur=="player"){playerBonCoup.push(obj.id);}//si le joueur touche
+            else {//si l'ordinateur touche
+                ordiBonCoup.push(obj.id);
                 touche[1]=obj.id;
                 touche[0]=true;
-                ordiCoup.push(obj.id);}
+                ordiCoup.push(obj.id);
+            }
         }
     }
-    PlacerOrdi();
+
+
+    PlacerOrdi(); //place les bateaux de l'ordinateur aléatoirement
     if(!GameStarted){
         let restart=document.getElementById("restart");
         restart.onclick=replacer;
@@ -187,19 +193,22 @@ window.onload=function(){
             board1[n].onclick=function(){
             if(GameStarted==false){
                 PlacerBateau(this);
+                if (this.style.backgroundColor == "grey") { this.onclick=function(){void(0);};}// si une case a deja été sélectionnée alors elle n'est plus cliquable
                 }
                 
             }
         }
     }
 
-    function main(){
+    function main(){ //structure déroulement partie
         let board2 = document.getElementsByClassName("cell");
         for (n = 100; n < 200; n++) {
             board2[n].onclick = function () {
-            alert(this.id);
             checkHit(this,"player");
+            checkWin();
+            if (this.style.backgroundColor == "red" || this.style.backgroundColor == "green") { this.onclick = function () { void (0); }; }
             ordiIA();
+            checkWin();
             }
         }
     }

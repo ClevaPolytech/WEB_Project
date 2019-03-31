@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <title>Projet</title>
-    <meta name="author" content="Clement Poueyto - Maëva Lecavelier">
+    <meta name="author" content="Clément Poueyto - Maëva Lecavelier">
     <link rel="stylesheet" href="jeu.css">
     <script src="jeu.js"></script>
 </head>
