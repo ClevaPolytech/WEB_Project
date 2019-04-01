@@ -11,6 +11,8 @@ window.onload=function(){
     let coupsPossible=[];//ensemble des coups réalisable par l'ordi
     let touche=[false,"XX"];
     let countCellBoat=0;
+    let playerCoup=0;
+    let chrono=0;
 
     alert("choisissez le placement de vos bateaux - Placez un bateau de 6 cases");
 
@@ -73,8 +75,12 @@ window.onload=function(){
     }
 
     function checkWin(){ //vérifie les conditions de victoire
-        if(ordiBonCoup.length==15){}
-        else if(playerBonCoup.length==15){}
+        if(ordiBonCoup.length==15){
+            document.location.href = "endGame.php?victory=ordi&temps="+chrono+"&coups="+ ordiCoup.length;
+        }
+        else if(playerBonCoup.length==15){
+            document.location.href = "endGame.php?victory=player&temps="+ chrono + "&coups=" + playerCoup;
+        }
     }
 
     function getRandomInt(max) { //renvoie une valeur aléatoire
@@ -124,6 +130,7 @@ window.onload=function(){
             val1 = getRandomInt(10);}
         return val0+val1;
         }
+    function chronometre(){chrono ++;}
 
     //appeler au début pour que le joueur place ses bateaux
     function PlacerBateau(obj){
@@ -201,10 +208,12 @@ window.onload=function(){
     }
 
     function main(){ //structure déroulement partie
+        setInterval(chronometre,1000);
         let board2 = document.getElementsByClassName("cell");
         for (n = 100; n < 200; n++) {
             board2[n].onclick = function () {
             checkHit(this,"player");
+            playerCoup++;
             checkWin();
             if (this.style.backgroundColor == "red" || this.style.backgroundColor == "green") { this.onclick = function () { void (0); }; }
             ordiIA();
