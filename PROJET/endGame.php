@@ -5,7 +5,7 @@ $tableau=[$_GET["temps"],$_GET["coups"]];
 if ($gagnant=="player"){$message = "BRAVO, vous avez gagné !";
     $score="vous avez gagné en ".$tableau[0]." secondes et en ".$tableau[1]." coups";
 
-    $affichage="<form action='endGameAction.php' method='post'>
+    $affichage="<form action='endGameAction.php?temps=".$tableau[0]."&coups=".$tableau[1]."'method='post'>
 			Entrez votre nom :
 			<br>
 			<input type='text' name='name'>";
@@ -24,6 +24,8 @@ else{$message="Dommage, l'ordinateur a gagné ! ";
     <title>Projet</title>
     <meta name="author" content="Clément Poueyto - Maëva Lecavelier">
     <link rel="stylesheet" href="endGame.css">
+    <script src="endGame.js"></script>
+
 </head>
 
 <body>

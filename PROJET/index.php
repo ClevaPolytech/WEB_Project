@@ -1,3 +1,19 @@
+<?php 
+function affiche_tab(){
+    $file="score.csv";
+    echo "<caption> SCORES </caption>";
+    foreach(file($file) as $line){
+            echo "<tr>";
+            $token=explode(";",$line);
+			foreach($token as $value){
+                echo "<td>";
+                echo $value;
+                echo "</td>";
+			}
+			echo "</tr>";
+        }
+    }
+ ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,6 +23,7 @@
     <meta name="author" content="Clement Poueyto - Maëva Lecavelier">
     <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>
+
 </head>
 
 <body>
@@ -24,7 +41,7 @@
         <p>
             Voici notre projet d'ADW : une bataille navale.
             Rappelons tout d'abord les règles.
-            </br>
+            <br>
             Le but du jeu est de détruire tous les navires de
             l'adversaire. Pour ce faire, la partie se déroule en 2 phases :
             <ul>
@@ -55,6 +72,12 @@
     </div>
     <div class="img">
         <img src="images/Bataille_navale.jpg" alt="image bateau" />
+    </div>
+
+    <div class="score">
+        <table>
+        <?php affiche_tab() ?>
+    </table>
     </div>
 </body>
 

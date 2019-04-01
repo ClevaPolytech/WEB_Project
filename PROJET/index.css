@@ -49,3 +49,19 @@ li a:hover {
 .img{
 	margin-left: 47%;
 }
+
+table{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+td, th {
+border-bottom: 1px solid #ddd;
+border-right: 1px solid #ddd;
+border: 1px solid black;
+}
+table td{
+    height: 50px;
+    width:50px;
+    vertical-align: center;
+    padding: 3px;
+}

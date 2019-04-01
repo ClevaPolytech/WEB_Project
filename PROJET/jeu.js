@@ -37,9 +37,6 @@ window.onload=function(){
         countCellBoat++;
     }
 
-    function ID(n,m){ //chiffre et indice du tableau
-        return (tab[m]+n).toString(); //retourne l'ID sous forme de String
-    }
 
     function elemCommun(obj){ //vérifie si l'élément obj (case) a un attribut commun avec les autres cases
         let Commun0=obj.id[0];
