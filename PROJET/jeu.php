@@ -1,18 +1,19 @@
-<?php function table($num) {
-        $tab=["A","B","C","D","E","F","G","H","I","J"];
-		for($n=0; $n<10; $n++){
-			echo "<tr>";
+<?php
+  include("placerOrdi.php");
+  function table($num) {
+    $tab=["A","B","C","D","E","F","G","H","I","J"];
+  	for($n=0; $n<10; $n++){
+  		echo "<tr>";
+  		for($m=0; $m<10; $m++){
+        echo "<td class=cell id=".$tab[$n].$m.$num.">";
+        echo $tab[$n].$m;
+  			echo "</td>";
+  		}
+  		echo "</tr>";
+  	}
+  }
 
-			for($m=0; $m<10; $m++){
-                echo "<td class=cell id=".$tab[$n].$m.$num.">";
-                echo $tab[$n].$m;
-                
-				echo "</td>";
-			}
-			echo "</tr>";
-		}
-	}
-    ?>
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -38,10 +39,12 @@
     <?php table(""); ?>
     </table>
 </div>
+<div id='res'> </div>
+<div id="repPHP"></div>
 <img id="restart" src="images/refresh.jpg" alt="reinitialiser" />
 
-    
-    
+
+
 </body>
 
 </html>

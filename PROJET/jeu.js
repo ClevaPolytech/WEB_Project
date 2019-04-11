@@ -14,36 +14,38 @@ window.onload=function(){
     let playerCoup=0;
     let chrono=0;
 
+    document.getElementById("repPHP").visibility = 'hidden';
+
     alert("choisissez le placement de vos bateaux - Placez un bateau de 6 cases");
 
 //-----------------------------------------------------------------------------//
 
-/*          GESTION DE L'ETAT DES CASE          */
+/*          GESTION DE L'ETAT DES CASES         */
 
     //modifie l'état d'une bonne case
-    function GoodCase(id){
-         let carre=document.getElementById(id);
-         carre.style.backgroundColor="green";
-     }
+  function GoodCase(id){
+    let carre=document.getElementById(id);
+    carre.style.backgroundColor="green";
+  }
 
-     //modifie l'état d'une case neutre
-    function NeutreCase(id) {
-        let carre = document.getElementById(id);
-        carre.style.backgroundColor = "#87CEFA";
-    }
+  //modifie l'état d'une case neutre
+  function NeutreCase(id) {
+    let carre = document.getElementById(id);
+    carre.style.backgroundColor = "#87CEFA";
+  }
 
-    //modifie l'état d'une mauvaise case
-    function BadCase(id) {
-        let carre = document.getElementById(id);
-        carre.style.backgroundColor = "red";
-    }
+  //modifie l'état d'une mauvaise case
+  function BadCase(id) {
+    let carre = document.getElementById(id);
+    carre.style.backgroundColor = "red";
+  }
 
     //indique qu'une case contient un bateau
-    function BoatCase(id){
-        let carre = document.getElementById(id);
-        carre.style.backgroundColor = "grey";
-        countCellBoat++;
-    }
+  function BoatCase(id){
+    let carre = document.getElementById(id);
+    carre.style.backgroundColor = "grey";
+    countCellBoat++;
+  }
 
 //---------------------------------------------------------------------//
 
@@ -113,13 +115,6 @@ window.onload=function(){
       }
     }
     return false;
-  }
-
-  function PlacerOrdi(){ //place les bateaux de l'ordinateur
-    for(let i = 0; i < dimBoat; i++){
-
-    }
-    ordiBoat = ["A3", "B3", "C3", "D3", "E3", "F3", "C6", "C7", "C8", "C9", "G6", "H6", "I6", "I2", "I3"];
   }
 
     //appeler au début pour que le joueur place ses bateaux
@@ -220,29 +215,90 @@ window.onload=function(){
     PlayerBoats = [];
     ordiBoat = [];
     countCellBoat = 0;
-    for (n = 0; n < 100; n++) {NeutreCase(board1[n].id);}
+    for (n = 0; n < 100; n++) {
+      NeutreCase(board1[n].id);
+    }
   }
 
-  //vérifie si touché ou non
+  //analyse les coups des deux joueurs
   function checkHit(cellClicked,joueur){
-    if (joueur == "player"&&ordiBoat.includes(cellClicked.id)==false){ //si le joueur ne touche pas
-      BadCase(cellClicked.id);
+    if (joueur == "player"){
+      checkPlayerMove(cellClicked);
     }
-    //si l'ordinateur ne touche pas
-    else if (PlayerBoats[3].indexOf(cellClicked.id)==-1 &&PlayerBoats[2].indexOf(cellClicked.id)==-1 &&PlayerBoats[1].indexOf(cellClicked.id)==-1 &&PlayerBoats[0].indexOf(cellClicked.id)==-1 && joueur == "ordi") {
+    else{
+      checkOrdiMove(cellClicked);
+    }
+  }
+
+  //analyse si le joueur a touché ou non
+  function checkPlayerMove(cellClicked){
+    //récupère le résultat de l'attaque du joueur
+    respHitPHP(cellClicked);
+    rep = document.getElementById("repPHP").dataset.etat;
+    console.log(rep);
+    // etat = t, c ou o (touché, coulé ou à l'eau)
+    let etat = rep;
+    if(etat == 'o'){
       BadCase(cellClicked.id);
-      ordiCoup.push(cellClicked.id);
     }
     else{
       GoodCase(cellClicked.id);
-      if(joueur=="player"){playerBonCoup.push(cellClicked.id);}//si le joueur touche
-      else {//si l'ordinateur touche
-        ordiBonCoup.push(cellClicked.id);
-        touche[1]=cellClicked.id;
-        touche[0]=true;
-        ordiCoup.push(cellClicked.id);
-      }
+      playerBonCoup.push(cellClicked.id);
     }
+    let commentaire = analyseStatus(etat);
+    dispRes(commentaire);
+  }
+
+  //analyse si l'ordi a touché ou non
+  function checkOrdiMove(cellClicked){
+    //si l'ordinateur ne touche pas
+    if (PlayerBoats[3].indexOf(cellClicked.id)==-1 &&PlayerBoats[2].indexOf(cellClicked.id)==-1 &&PlayerBoats[1].indexOf(cellClicked.id)==-1 &&PlayerBoats[0].indexOf(cellClicked.id)==-1) {
+      BadCase(cellClicked.id);
+      ordiCoup.push(cellClicked.id);
+    }
+    else {//si l'ordinateur touche
+      ordiBonCoup.push(cellClicked.id);
+      touche[1]=cellClicked.id;
+      touche[0]=true;
+      ordiCoup.push(cellClicked.id);
+    }
+  }
+
+  function respHitPHP(cellClicked){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        /* renvoie une string de la forme 'char, case' où:
+          - char = t,c,o : "touché", "coulé" ou "à l'eau"
+          Ce paramètre indique si le joueur a touché l'ordi
+          - case = indique la case que l'ordi veut attaquer
+        */
+        //console.log(this.responseText);
+        document.getElementById("repPHP").dataset.etat = this.responseText;
+      }
+    };
+    let urlparam = "checkOrdi.php?id="+cellClicked.id;
+    xhttp.open("GET", urlparam, false);
+    xhttp.send();
+  }
+
+  function analyseStatus(char){
+    if(char == 'o'){
+      return "Plouf ! Va falloir viser mieux moussaillon...";
+    }
+    if(char == 't'){
+      return "BOOOUUM ! Touché matelot !";
+    }
+    return "BADABOUM !! C'est coulé mon cap'taine !"
+  }
+
+/*            DEROULEMENT DE LA PARTIE        */
+
+  //affiche le resultat du coup du joueur
+  function dispRes(string){
+    let divRes = document.getElementById("res");
+    divRes.innerHTML = string;
+    divRes.visibility = "visible";
   }
 
   function main(){ //structure déroulement partie
@@ -250,25 +306,31 @@ window.onload=function(){
       let board2 = document.getElementsByClassName("cell");
       for (n = 100; n < 200; n++) {
         board2[n].onclick = function () {
-        checkHit(this,"player");
-        playerCoup++;
-        checkWin();
-        if (this.style.backgroundColor == "red" || this.style.backgroundColor == "green") { this.onclick = function () { void (0); }; }
-        ordiIA();
-        checkWin();
+          checkHit(this,"player");
+          playerCoup++;
+          checkWin();
+          if (this.style.backgroundColor == "red" || this.style.backgroundColor == "green") {
+            this.onclick = function ()
+            {
+              void (0);
+            };
+          }
+          ordiIA();
+          checkWin();
       }
     }
   }
 
   function begin(){
-    PlacerOrdi(); //place les bateaux de l'ordinateur aléatoirement
     if(!GameStarted){
+      document.getElementById("res").visibility = 'hidden';
       let restart = document.getElementById("restart");
+      let board1=document.getElementsByClassName("cell");
       restart.onclick=replacer;
       //crée un evenement de clic pour chaque case
-      let board1=document.getElementsByClassName("cell");
       for (n = 0; n < 100; n++) {
-        board1[n].onclick=function(){
+        board1[n].onclick=function()
+        {
           if(GameStarted==false){
             PlacerBateau(this);
             if (this.style.backgroundColor == "grey") {
