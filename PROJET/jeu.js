@@ -210,14 +210,18 @@ window.onload=function(){
   function chronometre(){chrono ++;}
 
   function replacer(){ //reinitialise le placement des bateaux
+    alert("test")
+    chrono=0;
     indexBoat = 0;
     GameStarted = false;
     PlayerBoats = [];
     ordiBoat = [];
     countCellBoat = 0;
+    let board1 = document.getElementsByClassName("cell");
     for (n = 0; n < 100; n++) {
       NeutreCase(board1[n].id);
     }
+    begin();
   }
 
   //analyse les coups des deux joueurs
@@ -257,6 +261,7 @@ window.onload=function(){
       ordiCoup.push(cellClicked.id);
     }
     else {//si l'ordinateur touche
+      GoodCase(cellClicked.id);
       ordiBonCoup.push(cellClicked.id);
       touche[1]=cellClicked.id;
       touche[0]=true;

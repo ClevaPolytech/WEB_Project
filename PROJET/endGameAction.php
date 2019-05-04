@@ -28,7 +28,7 @@ function save_array($array,$pathFile) {
 					}
 				}
             }
-            $buffer.="\n";
+	
 	file_put_contents($pathFile,$buffer);}
 }
 
@@ -40,11 +40,12 @@ if(isset($array[$name])){
         if($array[$name][1]>$coups){
             $array[$name][1]=$coups;
         }
-        (int)$array[$name][2]=(int)$array[$name][2]+(int)1;
+		(int)$array[$name][2]=(int)$array[$name][2]+(int)1;
+		$array[$name][2]=strval($array[$name][2])."\n";
 }
 
 else{
-    $array[$name]=[$temps,$coups,1];
+    $array[$name]=[$temps,$coups,"1"."\n"];
     }
 
 save_array($array,$pathFile);
