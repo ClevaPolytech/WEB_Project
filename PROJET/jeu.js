@@ -25,9 +25,7 @@ window.onload=function(){
     //modifie l'état d'une bonne case
   function GoodCase(id){
     let carre=document.getElementById(id);
-    var img = document.createElement("img");
-    img.src = "./images/explosion2.png";
-    carre.appendChild(img);
+    carre.style.backgroundColor="green";
   }
 
   //modifie l'état d'une case neutre
@@ -38,10 +36,8 @@ window.onload=function(){
 
   //modifie l'état d'une mauvaise case
   function BadCase(id) {
-    let carre=document.getElementById(id);
-    var img = document.createElement("img");
-    img.src = "./images/splash2.png";
-    carre.appendChild(img);
+    let carre = document.getElementById(id);
+    carre.style.backgroundColor = "red";
   }
 
     //indique qu'une case contient un bateau
