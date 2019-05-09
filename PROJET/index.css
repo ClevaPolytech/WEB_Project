@@ -20,7 +20,7 @@ p img {
   background-color: #170A83;
 }
 
-li {
+.menu > li {
   float: left;
 }
 
@@ -36,32 +36,67 @@ li a:hover {
   background-color: #0042FF;
 }
 
+/* CSS pour la page equipe.html */
+
+.equipe{
+	float: left;
+	text-align: justify;
+	margin: 15px;
+	width: 600px;
+}
+
+#imgEquipe > img{
+	text-align: center;
+	vertical-align: center;
+	padding-top: 60px;
+	padding-left: 60px;
+	float: left;
+	width: 500px;
+}
+
 /*CSS de l'intro */
 
 .intro{
 	float: left;
-	width: 42%;
+	width: 600px;
 	margin-left: 20px;
 	margin-bottom: 15px;
 	text-align: justify;
 }
 
-.img{
-	margin-left: 47%;
+/* CSS du score */
+.score{
+	display: block;
+	margin-left: 700px;
+}
+
+.score > img{
+	width: 400px;
+	padding-top: 50px;
 }
 
 table{
-	border: 1px solid black;
-	border-collapse: collapse;
+	width: 400px;
+	border: 0px solid #2e41b9;
+	border-radius: 5px;
+	/*border-collapse: collapse;*/
+
+
 }
+
 td, th {
-border-bottom: 1px solid #ddd;
-border-right: 1px solid #ddd;
-border: 1px solid black;
+	border-radius: 2px;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border: 1px solid black;
+	border: thin solid #00041d;
+	padding: 5px;
+	text-align: center;
 }
+
 table td{
-    height: 50px;
-    width:50px;
-    vertical-align: center;
-    padding: 3px;
+  height: auto;
+  width: auto;
+  vertical-align: center;
+  padding: 3px;
 }
