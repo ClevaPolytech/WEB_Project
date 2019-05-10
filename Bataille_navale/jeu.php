@@ -6,7 +6,7 @@
   		echo "<tr>";
   		for($m=0; $m<10; $m++){
         echo "<td class=cell id=".$tab[$n].$m.$num.">";
-        echo $tab[$n].$m;
+        //echo $tab[$n].$m;
   			echo "</td>";
   		}
   		echo "</tr>";

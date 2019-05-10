@@ -1,18 +1,26 @@
-<?php 
+<?php
 function affiche_tab(){
-    $file="score.csv";
-    echo "<caption> SCORES </caption>";
-    foreach(file($file) as $line){
-            echo "<tr>";
-            $token=explode(";",$line);
-			foreach($token as $value){
-                echo "<td>";
-                echo $value;
-                echo "</td>";
-			}
-			echo "</tr>";
-        }
-    }
+  $infos = ["nom","temps (s)", "nombre de coups", "nombre de partie jouées"];
+  $file="score.csv";
+  echo "<caption> SCORES </caption>";
+  echo "<tr> \n";
+  for($i = 0; $i < sizeof($infos); $i++){
+    echo "<th>";
+    echo $infos[$i];
+    echo "</th> \n";
+  }
+  echo "</tr> \n";
+  foreach(file($file) as $line){
+    echo "<tr> \n";
+    $token=explode(";",$line);
+		foreach($token as $value){
+      echo "<td>";
+      echo $value;
+      echo "</td> \n";
+		}
+		echo "</tr> \n";
+  }
+}
  ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -31,7 +39,7 @@ function affiche_tab(){
         <ul class="menu">
             <li> <a href="jeu.php"> Jeu </a></li>
             <li> <a href="index.html"> A propos du jeu </a></li>
-            <li> <a href="index.html"> Notre équipe </a></li>
+            <li> <a href="equipe.html"> Notre équipe </a></li>
         </ul>
     </div>
     <div class="heading">
@@ -70,16 +78,12 @@ function affiche_tab(){
             <img id="start" src="images/start.png" alt="start" />
         </p>
     </div>
-    <div class="img">
-        <img src="images/Bataille_navale.jpg" alt="image bateau" />
-    </div>
-
     <div class="score">
-        <table>
+      <table>
         <?php affiche_tab() ?>
-    </table>
+      </table>
+      <img src="images/Bataille_navale.jpg" alt="image bateau" />
     </div>
 </body>
 
 </html>
-

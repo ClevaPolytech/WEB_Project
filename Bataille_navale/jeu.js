@@ -22,28 +22,44 @@ window.onload=function(){
 
 /*          GESTION DE L'ETAT DES CASES         */
 
-    //modifie l'état d'une bonne case
+  //modifie l'état d'une bonne case
   function GoodCase(id){
-    let carre=document.getElementById(id);
-    carre.style.backgroundColor="green";
-  }
+    // on remplace l'image du bateau par une explosion
+    let carre = document.getElementById(id);
+    if(carre.getElementsByTagName('img')[0]){
+      var img = carre.getElementsByTagName('img')[0];
+      img.src = "./images/explosion2.png";
+    }
+    else{
+      var img = document.createElement("img");
+      img.src = "./images/explosion2.png";
+      carre.appendChild(img);
+    }
+    carre.setAttribute('data-type','good');
+    }
 
   //modifie l'état d'une case neutre
   function NeutreCase(id) {
     let carre = document.getElementById(id);
-    carre.style.backgroundColor = "#87CEFA";
+    carre.setAttribute('data-type','neutre');
   }
 
   //modifie l'état d'une mauvaise case
   function BadCase(id) {
-    let carre = document.getElementById(id);
-    carre.style.backgroundColor = "red";
+    let carre=document.getElementById(id);
+    var img = document.createElement("img");
+    img.src = "./images/splash2.png";
+    carre.appendChild(img);
+    carre.setAttribute('data-type','bad');
   }
 
-    //indique qu'une case contient un bateau
+  //indique qu'une case contient un bateau
   function BoatCase(id){
-    let carre = document.getElementById(id);
-    carre.style.backgroundColor = "grey";
+    let carre=document.getElementById(id);
+    var img = document.createElement("img");
+    img.src = "./images/boat.png";
+    carre.appendChild(img);
+    carre.setAttribute('data-type','boat');
     countCellBoat++;
   }
 
@@ -314,7 +330,8 @@ window.onload=function(){
           checkHit(this,"player");
           playerCoup++;
           checkWin();
-          if (this.style.backgroundColor == "red" || this.style.backgroundColor == "green") {
+          var data_type = this.getAttribute('data-type');
+          if (data_type == 'good' || data_type == 'bad') {
             this.onclick = function ()
             {
               void (0);
@@ -338,7 +355,7 @@ window.onload=function(){
         {
           if(GameStarted==false){
             PlacerBateau(this);
-            if (this.style.backgroundColor == "grey") {
+            if (this.getAttribute('data-type') == 'boat') {
               this.onclick=function(){void(0);};
             }// si une case a deja été sélectionnée alors elle n'est plus cliquable
           }
