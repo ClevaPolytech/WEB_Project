@@ -11,7 +11,7 @@
       $lettre = aleatoireLettre($long);
       $chiffre = aleatoireChiffre();
       $id = $lettre.$chiffre;
-      while(!isPossible($bateau, $sens, $id)){
+      while(!isPossible($bateau, $sens, $id) || is_taken($id)){
         $sens = aleatoireSens();
         $lettre = aleatoireLettre($long);
         $chiffre = aleatoireChiffre();
