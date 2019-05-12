@@ -29,6 +29,7 @@
     <h1 id="titre">Phase de placement </h1>
     <h2 id=msg> </h2>
 <div>
+  <div id='res'> </div> 
     <table class="board1">
         <caption>Vos bateaux</caption>
     <?php table("P"); ?>
@@ -39,7 +40,7 @@
     <?php table(""); ?>
     </table>
 </div>
-<div id='res'> </div>
+
 <div id="repPHP"></div>
 <img id="restart" src="images/refresh.jpg" alt="reinitialiser" />
 
