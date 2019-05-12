@@ -16,7 +16,7 @@ window.onload=function(){
 
     document.getElementById("repPHP").visibility = 'hidden';
 
-    alert("choisissez le placement de vos bateaux - Placez un bateau de 6 cases");
+    document.getElementById("msg").innerHTML =("choisissez le placement de vos bateaux - Placez un bateau de 6 cases");
 
 //-----------------------------------------------------------------------------//
 
@@ -153,10 +153,12 @@ window.onload=function(){
       countCellBoat = 0;
       if(dimBoat[indexBoat]==null){
         GameStarted=true;
+        document.getElementById("titre").innerHTML = "Phase de jeu";
+        document.getElementById("msg").innerHTML =("LA PARTIE COMMENCE !");
         main();
       }
       else{
-        alert("placez bateau de " + dimBoat[indexBoat] + " cases");
+        document.getElementById("msg").innerHTML=("placez un bateau de " + dimBoat[indexBoat] + " cases");
       }
     }
   }
@@ -226,18 +228,7 @@ window.onload=function(){
   function chronometre(){chrono ++;}
 
   function replacer(){ //reinitialise le placement des bateaux
-    alert("test")
-    chrono=0;
-    indexBoat = 0;
-    GameStarted = false;
-    PlayerBoats = [];
-    ordiBoat = [];
-    countCellBoat = 0;
-    let board1 = document.getElementsByClassName("cell");
-    for (n = 0; n < 100; n++) {
-      NeutreCase(board1[n].id);
-    }
-    begin();
+    document.location.href = "jeu.php"
   }
 
   //analyse les coups des deux joueurs

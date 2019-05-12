@@ -26,8 +26,8 @@
 </head>
 
 <body>
-    <h1>Début du jeu</h1>
-
+    <h1 id="titre">Phase de placement </h1>
+    <h2 id=msg> </h2>
 <div>
     <table class="board1">
         <caption>Vos bateaux</caption>

@@ -12,7 +12,7 @@ if ($gagnant=="player"){$message = "BRAVO, vous avez gagné !";
 }
 else{$message="Dommage, l'ordinateur a gagné ! ";
     $score="L'ordinateur a gagné en ".$tableau[0]." secondes et en ".$tableau[1]." coups";
-    $affichage="<img id='continuer' src='images/continuer.jpeg' alt='continuer' />";}
+    $affichage="<img id='continuer' src='images/continue.jpg' alt='continuer' />";}
 ?>
 
 
@@ -29,11 +29,14 @@ else{$message="Dommage, l'ordinateur a gagné ! ";
 </head>
 
 <body>
-    <h1><?php echo $message ?></h1>
+    <div id=boite>
+        <h1><?php echo $message ?></h1>
 
-    <h2><?php echo $score ?></h2>
+        <h2><?php echo $score ?></h2>
 
-    <?php echo $affichage ?>
+        <?php echo $affichage ?>
+    
+    </div>
     
     
 </body>
