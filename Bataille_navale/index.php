@@ -38,7 +38,7 @@ function affiche_tab(){
     <div>
         <ul class="menu">
             <li> <a href="jeu.php"> Jeu </a></li>
-            <li> <a href="index.html"> A propos du jeu </a></li>
+            <li> <a href="index.php"> A propos du jeu </a></li>
             <li> <a href="equipe.html"> Notre équipe </a></li>
         </ul>
     </div>
